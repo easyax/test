@@ -11,23 +11,56 @@
       font-family: monospace;
       font-size: 14px;
       margin: 0;
-      padding: 10px;
+      padding: 2px;
       overflow: hidden;
     }
-    /* Logo sabit konumda, üst boşluk azaltıldı */
+    /* Logo animasyonu eklenmiş ve konumlandırılmış */
     .logo-container {
       position: fixed;
-      top: 5px;
+      top: 20px;
       left: 20px;
       width: 350px;
       z-index: 1000;
+      animation: electricShock 1s ease-in-out forwards;
     }
-    .logo-container img {
-      width: 100%;
-      height: auto;
-      display: block;
+    @keyframes electricShock {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        filter: brightness(150%) contrast(200%);
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(50%) contrast(300%);
+      }
+      20% {
+        opacity: 0.8;
+        transform: translateY(5px);
+        filter: brightness(200%) contrast(100%);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(100%) contrast(100%);
+      }
+      40% {
+        opacity: 0.7;
+        transform: translateY(-5px);
+        filter: brightness(150%) contrast(150%);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(100%) contrast(100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: none;
+      }
     }
-    /* Terminal, logoların altına başlayacak şekilde ayarlandı */
+    /* Terminal, logo animasyonundan sonra başlayacak */
     #terminal {
       white-space: pre-wrap;
       overflow-y: auto;
@@ -40,9 +73,9 @@
   </style>
 </head>
 <body>
-  <!-- Logo Bölgesi: GitHub'daki SVG dosyası -->
+  <!-- Logo Bölgesi: GitHub'dan SVG çekiliyor -->
   <div class="logo-container">
-    <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(2).svg" alt="Treyarch Logo">
+    <img src="https://raw.githubusercontent.com/kullanici_adin/repository/main/Untitled%20(2).svg" alt="Treyarch Logo">
   </div>
   <!-- Terminal Bölgesi -->
   <div id="terminal"></div>
@@ -50,7 +83,7 @@
   <script>
     const terminal = document.getElementById("terminal");
 
-    // Boot logları (ilk temel mesajlar)
+    // Temel boot logları
     const bootLines = [
       "[System Boot Initiated...]",
       "[Memory Diagnostic...] PASSED",
@@ -100,14 +133,13 @@
         terminal.appendChild(lineElem);
         terminal.scrollTop = terminal.scrollHeight;
         
-        // Rastgele loglar için daha yüksek hız (%80 hızlandırılmış)
         let delay;
         if (bootLines[index].startsWith("Process")) {
-          delay = Math.random() * 10 + 5; // 5ms - 15ms
+          delay = Math.random() * 10 + 5; // 5ms - 15ms arası
         } else if (bootLines[index].includes("[")) {
-          delay = Math.random() * 30 + 20; // 20ms - 50ms
+          delay = Math.random() * 30 + 20; // 20ms - 50ms arası
         } else {
-          delay = Math.random() * 20 + 10; // 10ms - 30ms
+          delay = Math.random() * 20 + 10; // 10ms - 30ms arası
         }
         
         index++;
@@ -122,10 +154,10 @@
       }
     }
 
-    // Başlangıçta 1.5-2 saniye logo gösterimi için bekleme
+    // Terminal logları başlamadan önce logo animasyonunun bitip ekstra 1.5 saniye beklemesi
     setTimeout(() => {
       typeLine();
-    }, Math.random() * 500 + 1500);
+    }, Math.random() * 500 + 3000); // 3000ms - 3500ms bekle
 
     document.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
