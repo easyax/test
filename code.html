@@ -14,7 +14,7 @@
       padding: 2px;
       overflow: hidden;
     }
-    /* İlk logo: Sol üstte, sabit konumda, animasyonlu */
+    /* İlk logo: Sabit konum, animasyonlu */
     .logo-container {
       position: fixed;
       top: 250px;
@@ -60,7 +60,7 @@
         filter: none;
       }
     }
-    /* Terminal: Log akışı */
+    /* Terminal alanı */
     #terminal {
       white-space: pre-wrap;
       overflow-y: auto;
@@ -70,15 +70,15 @@
       margin-top: 80px;
       padding: 10px;
     }
-    /* İkinci logo: Başlangıçta ekranın altında, görünmez, kod akışı tamamlandıktan sonra yukarı kayacak */
+    /* İkinci logo: Başlangıçta gizli, aşağıdan ekrana kayarak girecek */
     .second-logo-container {
       position: fixed;
-      bottom: -150px; /* Başlangıçta gizli */
+      bottom: -150px;  /* Başlangıçta ekrandan aşağıda */
       left: 50%;
       transform: translateX(-50%);
       width: 300px;
       opacity: 0;
-      transition: bottom 1.5s ease-out, opacity 1.5s ease-out;
+      transition: bottom 1s ease-out, opacity 1s ease-out;
       z-index: 1000;
     }
   </style>
@@ -130,7 +130,7 @@
       bootLines.splice(9, 0, randomLog);
     }
 
-    // Ek Treyarch güvenlik logları (İngilizce)
+    // Ek Treyarch güvenlik logları (İngilizce, daha uzun)
     const treyarchLogs = [
       "[TREYARCH SECURITY] AI-based intrusion detection activated",
       "[TREYARCH SECURITY] Real-time threat analytics online",
@@ -180,25 +180,44 @@
         
         let delay;
         if (bootLines[index].startsWith("Process")) {
-          delay = Math.random() * 10 + 5; // 5ms - 15ms arası
+          delay = Math.random() * 10 + 5; // 5ms - 15ms
         } else if (bootLines[index].includes("[")) {
-          delay = Math.random() * 30 + 20; // 20ms - 50ms arası
+          delay = Math.random() * 30 + 20; // 20ms - 50ms
         } else {
-          delay = Math.random() * 20 + 10; // 10ms - 30ms arası
+          delay = Math.random() * 20 + 10; // 10ms - 30ms
         }
         
         index++;
         setTimeout(typeLine, delay);
       } else {
         setTimeout(() => {
+          // Terminal bitiş mesajı
           const endLine = document.createElement("div");
           endLine.textContent = "\nPress ENTER to continue...\n";
           terminal.appendChild(endLine);
           terminal.scrollTop = terminal.scrollHeight;
-          // İkinci logoyu göster: Yukarı kaydırarak ekrana getir.\n
-          const secondLogo = document.getElementById("secondLogo");
-          secondLogo.style.bottom = "50px"; // Ekranın içine doğru kaydır\n
-          secondLogo.style.opacity = "1";
+          
+          // Terminal içeriklerini biraz daha yukarı kaydırmak için ekstra boşluk ekleyelim
+          for (let i = 0; i < 5; i++) {
+            const emptyLine = document.createElement("div");
+            emptyLine.innerHTML = "&nbsp;";
+            terminal.appendChild(emptyLine);
+          }
+          terminal.scrollTop = terminal.scrollHeight;
+          
+          // İlk logoyu kaydır (sola doğru kaybolsun)
+          const firstLogo = document.querySelector(".logo-container");
+          firstLogo.style.transition = "all 1s ease-out";
+          firstLogo.style.transform = "translateX(-150%)";
+          firstLogo.style.opacity = "0";
+          
+          // İkinci logoyu, kod akışıyla birlikte yukarı kaydırarak göster\n
+          setTimeout(() => {
+            const secondLogo = document.getElementById("secondLogo");
+            secondLogo.style.transition = "all 1s ease-out";
+            secondLogo.style.bottom = "50px"; // Ekranın içine doğru kaydır\n
+            secondLogo.style.opacity = "1";
+          }, 500);
         }, 200);
       }
     }
