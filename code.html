@@ -23,43 +23,65 @@
             white-space: pre;
             display: none;
             text-align: center;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div id="terminal"></div>
     <div id="ascii-art" class="ascii-art">
- ████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗
- ╚══██╔══╝██╔══██╗██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║
-    ██║   ██████╔╝█████╗  ██║   ██║███████║██████╔╝██║     ███████║
-    ██║   ██╔═══╝ ██╔══╝  ██║   ██║██╔══██║██╔═══╝ ██║     ██╔══██║
-    ██║   ██║     ███████╗╚██████╔╝██║  ██║██║     ╚██████╗██║  ██║
-    ╚═╝   ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝      ╚═════╝╚═╝  ╚═╝
+████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗  
+╚══██╔══╝██╔══██╗██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║  
+   ██║   ██████╔╝█████╗  ██║   ██║███████║██████╔╝██║     ███████║  
+   ██║   ██╔═══╝ ██╔══╝  ██║   ██║██╔══██║██╔═══╝ ██║     ██╔══██║  
+   ██║   ██║     ███████╗╚██████╔╝██║  ██║██║     ╚██████╗██║  ██║  
+   ╚═╝   ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝      ╚═════╝╚═╝  ╚═╝  
     </div>
 
     <script>
         const bootLines = [
-            "[Treyarch Boot Sequence Initiated...]",
-            "[System Check]: Initializing security protocols...",
-            "[Security]: 256-bit Encryption - OK",
-            "[Security]: Facial Recognition - Enabled",
-            "[Network]: Establishing Secure Connection...",
-            "[Network]: Encrypted Server Handshake - OK",
-            "[Data]: Synchronizing user profiles...",
-            "[Data]: Secure Storage Mounted...",
-            "[Logs]: Checking for unauthorized access...",
-            "[Logs]: No violations detected.",
-            "[Finalizing]: Loading Treyarch Core...",
-            "[Finalizing]: Optimizing UI...",
-            "[Finalizing]: Ready."
+            "[Initializing Treyarch Secure System...]",
+            "[Checking Memory...] OK",
+            "[Loading Kernel Modules...]",
+            "[Connecting to Secure Network...]",
+            "[Validating Encryption Keys...]",
+            "[System Security Scan...] No Threats Detected",
+            "[Loading Custom AI Protocols...]",
+            "[Authenticating Users...]",
+            "[Booting Advanced Firewall...]",
+            "[Checking RAID Configuration...]",
+            "[Loading Secure Storage Modules...]",
+            "[Scanning External Connections...]",
+            "[Loading UI Components...]",
+            "[Finalizing System Initialization...]",
+            "----------------------------------------",
+            "RANDOM SYSTEM LOGS:",
+            "USB Device Detected: VID_0E8F&PID_0022",
+            "Running Process: SecureDaemon.exe",
+            "Memory Page Fault at 0x0033FFAA",
+            "Network Packet Loss: 0.0001%",
+            "Encrypted Data Received: 2048 bits",
+            "GPU Acceleration: ENABLED",
+            "AI Model Training Progress: 92%",
+            "System Time: 03:27:54 UTC",
+            "Logfile Saved: /var/log/bootlog_032754.log",
+            "------------------------------",
+            "[Finalizing: Ready...]",
         ];
+
+        // Daha fazla rastgele sistem logu oluştur
+        for (let i = 0; i < 130; i++) {
+            let randomHex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase();
+            let randomCode = `Process ${Math.floor(Math.random() * 9000) + 1000}: SYS_EVENT_${randomHex}`;
+            bootLines.splice(15, 0, randomCode); // Rastgele yerlere ekle
+        }
 
         let index = 0;
         function typeLine() {
             if (index < bootLines.length) {
                 document.getElementById("terminal").innerHTML += bootLines[index] + "\n";
                 index++;
-                setTimeout(typeLine, 100);
+                setTimeout(typeLine, Math.random() * 300 + 200); // Rastgele hızda yaz (200ms-500ms)
             } else {
                 setTimeout(() => {
                     document.getElementById("ascii-art").style.display = "block";
