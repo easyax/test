@@ -10,50 +10,54 @@
       color: white;
       font-family: monospace;
       font-size: 14px;
-      padding: 20px;
       margin: 0;
       overflow: hidden;
+      padding-top: 100px; /* Terminal üst boşluğu, logoların altında başlaması için */
     }
     #terminal {
       white-space: pre-wrap;
       overflow-y: auto;
-      height: 100vh;
+      height: calc(100vh - 100px);
       display: flex;
       flex-direction: column;
+      padding: 20px;
     }
     .logo-container {
-      position: absolute;
+      position: fixed;
       top: 20px;
       left: 20px;
-      width: 300px;
+      width: 350px;
+      z-index: 1000;
     }
     .logo-container svg {
       width: 100%;
       height: auto;
+      /* Logonun keskin görünmesi için antialiasing kapatılabilir, tarayıcıya bağlı */
     }
   </style>
 </head>
 <body>
+  <!-- Logo Bölgesi: Sabit ve sol üstte -->
   <div class="logo-container">
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 652 652">
       <g transform="matrix(1.8, 0, 0, 1.8, 100, -150)">
+        <!-- Aşağıdaki path verisini orijinal SVG'nizden alınız. (Path verisi kısaltılmış) -->
         <path d="M206.2,352.2l3.6,6.2c6.1,8.3,12.7,24.5,2.5,39.2c0.8-1.2,4.9-8.4-0.3-22c0,0,2.6,27.4-29.4,19.3 
-        c-18.9-4.8-36.4-14.1-51-27.1l0.8-1.1l11.7,8.5c31.4,22.7,52.2,18.4,52.2,18.4c-27.3,0.2-52.2-20.2-52.2-20.2 
-        c-2.1-2.9-3.1-6.6-2.9-10.2l-3-4.9c0,0,9.4-14.5,12.9-22.1c0,0,28,8.3,33.3,28c0,0,6.2,21.2-28.2,6.3c0,0,63,32.9,48-4 
-        c0,0-12.7-25.7-50.1-37.9l0.3-0.8c7.3,2,14.2,5.1,20.6,9.2c40.5,25.5,32.5,42.7,32.5,42.7l0.6-0.4c6.1-20.8-32.9-43.1-32.9-43.1 
-        l-13.1-13c5.3,1.6,10.4,3.6,15.5,6l3.3,1.3c-9.4-6.2-22.2-9.8-24.2-10.3c2.3-9.9,3.7-20,4-30.1c1.6-42.4-15.7-61.8-37.9-62 
-        c-2,0-15.9-0.3-25.2,15.1l1.6-1.2c3.9-3.9,14-11.2,23.3-10.3l3.8,2.1c0,0-9.3-2.3-15,4.3c0,0,8.4-7.8,20.8-1.4l0.8,1 
-        c-1.6-0.9-3.2-1.6-5-2.1c-0.9-0.2-7.3-1.8-11.9,0.7l6.1,2.1c0.4,0,28,1.6,25.6,54.2c-0.7,14.3-4.8,39.8-20.3,59.4 
-        c-14.6,18.4-56.7,58.5-80.6,40.5c0,0-12-8.6,1.4-31.4c0,0-13.5,14.7-8.7,35.3c0,0-16-13.4,6.4-44.2c16.1-20.4,41.9-29.4,41.9-29.4"
-        style="fill: rgb(255, 255, 255);"/>
+          c-18.9-4.8-36.4-14.1-51-27.1l0.8-1.1l11.7,8.5c31.4,22.7,52.2,18.4,52.2,18.4c-27.3,0.2-52.2-20.2-52.2-20.2 
+          c-2.1-2.9-3.1-6.6-2.9-10.2l-3-4.9c0,0,9.4-14.5,12.9-22.1c0,0,28,8.3,33.3,28c0,0,6.2,21.2-28.2,6.3c0,0,63,32.9,48-4 
+          c0,0-12.7-25.7-50.1-37.9l0.3-0.8c7.3,2,14.2,5.1,20.6,9.2c40.5,25.5,32.5,42.7,32.5,42.7l0.6-0.4c6.1-20.8-32.9-43.1-32.9-43.1 
+          l-13.1-13c5.3,1.6,10.4,3.6,15.5,6l3.3,1.3c-9.4-6.2-22.2-9.8-24.2-10.3c2.3-9.9,3.7-20,4-30.1c1.6-42.4-15.7-61.8-37.9-62" fill="white"/>
       </g>
     </svg>
   </div>
+
+  <!-- Terminal Bölgesi -->
   <div id="terminal"></div>
 
   <script>
     const terminal = document.getElementById("terminal");
 
+    // Boot logları (ilk temel mesajlar)
     const bootLines = [
       "[System Boot Initiated...]",
       "[Memory Diagnostic...] PASSED",
@@ -68,30 +72,33 @@
       "SYSTEM LOGS:"
     ];
 
-    const securityLogs = [
-      "[Treyarch Security System] AI-based intrusion detection activated",
-      "[Treyarch Security System] Real-time threat analysis initiated",
-      "[Treyarch Security System] End-to-end encryption verified",
-      "[Treyarch Security System] Firewall Status: OPTIMAL",
-      "[Treyarch Security System] Secure communications established"
-    ];
-
+    // Rastgele sistem logları (hızlandırılmış)
     const randomLogs = [
-      "Task Scheduler: Next execution cycle in 120ms",
-      "Daemon Service: Refreshing security token...",
-      "Kernel Panic: FALSE ALARM, Auto-recovery successful",
-      "Process 7234: SYSTEM_CHECKPOINT_REACHED",
-      "Cache Manager: Purging outdated sessions...",
-      "Remote Connection: Secure tunnel established",
-      "Auth System: Biometric scan complete"
+      "Task Scheduler: Cycle in 120ms",
+      "Daemon: Refreshing token...",
+      "Kernel: Auto-recovery successful",
+      "Process 7234: CHECKPOINT_REACHED",
+      "Cache: Purging sessions...",
+      "Remote Connection: Tunnel established",
+      "Auth: Biometric scan complete"
     ];
 
+    // Ekstra Treyarch güvenlik logları (İngilizce)
+    const treyarchLogs = [
+      "[TREYARCH SECURITY] AI intrusion detection active",
+      "[TREYARCH SECURITY] Real-time threat analytics online",
+      "[TREYARCH SECURITY] End-to-end encryption verified",
+      "[TREYARCH SECURITY] Firewall integrity: Optimal",
+      "[TREYARCH SECURITY] Secure channels established"
+    ];
+
+    // 150 adet rastgele log ekle
     for (let i = 0; i < 150; i++) {
       let randomLog = `Process ${Math.floor(Math.random() * 9000) + 1000}: ${randomLogs[Math.floor(Math.random() * randomLogs.length)]}`;
       bootLines.splice(9, 0, randomLog);
     }
-
-    bootLines.push(...securityLogs);
+    // En sona Treyarch loglarını ekle
+    bootLines.push(...treyarchLogs);
 
     let index = 0;
     function typeLine() {
@@ -101,13 +108,39 @@
         terminal.appendChild(lineElem);
         terminal.scrollTop = terminal.scrollHeight;
         
-        let delay = Math.random() * 50 + 10; // %75 hızlandırıldı
+        let delay;
+        // Eğer satır rastgele log ise (başında "Process")
+        if (bootLines[index].startsWith("Process")) {
+          delay = Math.random() * 10 + 5; // 5ms - 15ms arası (daha hızlı)
+        } else if (bootLines[index].includes("[")) {
+          delay = Math.random() * 40 + 20; // 20ms - 60ms arası
+        } else {
+          delay = Math.random() * 20 + 10; // 10ms - 30ms arası
+        }
+        
         index++;
         setTimeout(typeLine, delay);
+      } else {
+        // Tüm loglar tamamlandığında son mesaj
+        setTimeout(() => {
+          const endLine = document.createElement("div");
+          endLine.textContent = "\nPress ENTER to continue...\n";
+          terminal.appendChild(endLine);
+          terminal.scrollTop = terminal.scrollHeight;
+        }, 200);
       }
     }
 
-    typeLine();
+    // Boot logları başlamadan önce 1.5-2 saniye logo gösterimi (terminal görünürlüğü gizli, logo fixed olarak kalıyor)
+    setTimeout(() => {
+      typeLine();
+    }, Math.random() * 500 + 1500); // 1500ms - 2000ms bekle
+
+    document.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        window.location.href = "https://your-next-page.com";
+      }
+    });
   </script>
 </body>
 </html>
