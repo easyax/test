@@ -1,108 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Treyarch Boot</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: monospace;
-            font-size: 14px;
-            padding: 20px;
-            overflow: hidden;
-        }
-        #terminal {
-            white-space: pre-wrap;
-            overflow-y: auto;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .ascii-art {
-            font-size: 18px;
-            font-weight: bold;
-            white-space: pre;
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treyarch Boot</title>
+  <style>
+    body {
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 20px;
+      margin: 0;
+      overflow: hidden;
+    }
+    #terminal {
+      white-space: pre-wrap;
+      overflow-y: auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .logo-container {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .logo-container img {
+      max-width: 80%;
+    }
+  </style>
 </head>
 <body>
-    <div id="terminal"></div>
-    <div id="ascii-art" class="ascii-art">
-████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗  
-╚══██╔══╝██╔══██╗██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║  
-   ██║   ██████╔╝█████╗  ██║   ██║███████║██████╔╝██║     ███████║  
-   ██║   ██╔═══╝ ██╔══╝  ██║   ██║██╔══██║██╔═══╝ ██║     ██╔══██║  
-   ██║   ██║     ███████╗╚██████╔╝██║  ██║██║     ╚██████╗██║  ██║  
-   ╚═╝   ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝      ╚═════╝╚═╝  ╚═╝  
-    </div>
+  <div id="terminal"></div>
+  <div id="logo" class="logo-container">
+    <!-- Treyarch Logo Image - Lütfen 'treyarch_logo.png' dosyasını GitHub Pages projenize ekleyin veya buradaki src'yi kendi logo linkinizle değiştirin -->
+    <img src="treyarch_logo.png" alt="Treyarch Logo">
+  </div>
 
-    <script>
-        const terminal = document.getElementById("terminal");
+  <script>
+    const terminal = document.getElementById("terminal");
 
-        const bootLines = [
-            "[Initializing Treyarch Secure System...]",
-            "[Checking Memory...] OK",
-            "[Loading Kernel Modules...]",
-            "[Connecting to Secure Network...]",
-            "[Validating Encryption Keys...]",
-            "[System Security Scan...] No Threats Detected",
-            "[Loading Custom AI Protocols...]",
-            "[Authenticating Users...]",
-            "[Booting Advanced Firewall...]",
-            "[Checking RAID Configuration...]",
-            "[Loading Secure Storage Modules...]",
-            "[Scanning External Connections...]",
-            "[Loading UI Components...]",
-            "[Finalizing System Initialization...]",
-            "----------------------------------------",
-            "RANDOM SYSTEM LOGS:",
-        ];
+    // Temel boot logları
+    const bootLines = [
+      "[Initializing Treyarch Secure System...]",
+      "[Checking Memory...] OK",
+      "[Loading Kernel Modules...]",
+      "[Connecting to Secure Network...]",
+      "[Validating Encryption Keys...]",
+      "[System Security Scan...] No Threats Detected",
+      "[Loading Custom AI Protocols...]",
+      "[Authenticating Users...]",
+      "[Booting Advanced Firewall...]",
+      "[Checking RAID Configuration...]",
+      "[Loading Secure Storage Modules...]",
+      "[Scanning External Connections...]",
+      "[Loading UI Components...]",
+      "[Finalizing System Initialization...]",
+      "----------------------------------------",
+      "RANDOM SYSTEM LOGS:",
+    ];
 
-        // 300+ Rastgele satır oluştur
-        for (let i = 0; i < 300; i++) {
-            let randomHex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase();
-            let randomCode = `Process ${Math.floor(Math.random() * 9000) + 1000}: SYS_EVENT_${randomHex}`;
-            bootLines.splice(15, 0, randomCode);
-        }
+    // 300+ rastgele satır oluştur (mantıklı olanların arasına yerleştiriliyor)
+    for (let i = 0; i < 300; i++) {
+      let randomHex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase();
+      let randomCode = `Process ${Math.floor(Math.random() * 9000) + 1000}: SYS_EVENT_${randomHex}`;
+      bootLines.splice(15, 0, randomCode);
+    }
 
-        let index = 0;
-        
-        function typeLine() {
-            if (index < bootLines.length) {
-                let line = document.createElement("div");
-                line.textContent = bootLines[index];
-                terminal.appendChild(line);
-                
-                // **Otomatik kaydırma**
-                terminal.scrollTop = terminal.scrollHeight;
+    let index = 0;
+    function typeLine() {
+      if (index < bootLines.length) {
+        const lineElem = document.createElement("div");
+        lineElem.textContent = bootLines[index];
+        terminal.appendChild(lineElem);
+        // Otomatik kaydırma
+        terminal.scrollTop = terminal.scrollHeight;
 
-                // **Mantıklı satırlar yavaş, rastgele olanlar hızlı**
-                let delay = (bootLines[index].includes("[") || bootLines[index].includes(":")) 
-                    ? Math.random() * 500 + 300  // Mantıklı loglar 300ms - 800ms
-                    : Math.random() * 150 + 50;  // Rastgele loglar 50ms - 200ms
+        // Mantıklı satırlarda yavaş, rastgele satırlarda hızlı yazdırma
+        let delay = (bootLines[index].includes("[") || bootLines[index].includes(":")) 
+            ? Math.random() * 500 + 300   // 300ms-800ms arası
+            : Math.random() * 150 + 50;   // 50ms-200ms arası
 
-                index++;
-                setTimeout(typeLine, delay);
-            } else {
-                setTimeout(() => {
-                    document.getElementById("ascii-art").style.display = "block";
-                    terminal.innerHTML += "\nPress ENTER to continue...\n";
-                }, 500);
-            }
-        }
+        index++;
+        setTimeout(typeLine, delay);
+      } else {
+        // Tüm satırlar yazıldığında logo görüntüsünü göster
+        setTimeout(() => {
+          document.getElementById("logo").style.display = "block";
+          const endLine = document.createElement("div");
+          endLine.textContent = "\nPress ENTER to continue...\n";
+          terminal.appendChild(endLine);
+          terminal.scrollTop = terminal.scrollHeight;
+        }, 500);
+      }
+    }
+    typeLine();
 
-        typeLine();
-
-        document.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                window.location.href = "https://your-next-page.com"; // Yönlendirme adresi
-            }
-        });
-    </script>
+    document.addEventListener("keypress", (event) => {
+      if (event.key === "Enter") {
+        window.location.href = "https://your-next-page.com"; // Yönlendirme adresini buraya girin
+      }
+    });
+  </script>
 </body>
 </html>
