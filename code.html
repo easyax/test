@@ -151,17 +151,6 @@
   "[TREYARCH SECURITY] Secure satellite uplink connection verified",
   "[TREYARCH SECURITY] Post-quantum cryptographic defense enabled",
   "[TREYARCH SECURITY] System-wide security posture: MAXIMUM DEFENSE"
-
-"████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗"
-"╚══██╔══╝██╔══██╗██╔════╝╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝██║  ██║"
-"   ██║   ██████╔╝█████╗   ╚████╔╝ ███████║██████╔╝██║     ███████║"
- "  ██║   ██╔══██╗██╔══╝    ╚██╔╝  ██╔══██║██╔══██╗██║     ██╔══██║"
- "  ██║   ██║  ██║███████╗   ██║   ██║  ██║██║  ██║╚██████╗██║  ██║"
- "  ╚═╝   ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝"
-                                                                  
-                                                                    
-                                                                  
-
 ];
 
 bootLines.push(...treyarchLogs);
@@ -196,6 +185,36 @@ bootLines.push(...treyarchLogs);
         }, 200);
       }
     }
+    
+// ASCII Treyarch logosu
+const asciiLogo = `
+████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗
+╚══██╔══╝██╔══██╗██╔════╝╚██╗ ██╔╝██╔══██╗██╔══██╗██╔════╝██║  ██║
+   ██║   ██████╔╝█████╗   ╚████╔╝ ███████║██████╔╝██║     ███████║
+   ██║   ██╔══██╗██╔══╝    ╚██╔╝  ██╔══██║██╔══██╗██║     ██╔══██║
+   ██║   ██║  ██║███████╗   ██║   ██║  ██║██║  ██║╚██████╗██║  ██║
+   ╚═╝   ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+`;
+
+// ASCII logoyu ekleme işlemi (kod tamamlandıktan sonra)
+setTimeout(() => {
+    // Fazladan boş satırlar ekleyerek kaydırma oluştur
+    for (let i = 0; i < 10; i++) {
+        const emptyLine = document.createElement("div");
+        emptyLine.innerHTML = "&nbsp;";
+        terminal.appendChild(emptyLine);
+    }
+    
+    // ASCII logo satırlarını ekle
+    asciiLogo.split("\n").forEach(line => {
+        const lineElem = document.createElement("div");
+        lineElem.textContent = line;
+        terminal.appendChild(lineElem);
+    });
+
+    // Terminali en aşağı kaydır
+    terminal.scrollTop = terminal.scrollHeight;
+}, 2000); // 2 saniye gecikmeli eklenir
 
     // Terminal logları başlamadan önce logo animasyonunun bitip ekstra 1.5 saniye beklemesi
     setTimeout(() => {
