@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booting...</title>
+    <title>Treyarch Boot</title>
     <style>
         body {
             background-color: black;
-            color: #00ff00;
+            color: white;
             font-family: monospace;
-            font-size: 16px;
+            font-size: 14px;
             padding: 20px;
         }
         #terminal {
@@ -17,23 +17,41 @@
             overflow: hidden;
             height: 100vh;
         }
+        .ascii-art {
+            font-size: 18px;
+            font-weight: bold;
+            white-space: pre;
+            display: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div id="terminal"></div>
+    <div id="ascii-art" class="ascii-art">
+ ████████╗██████╗ ███████╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗
+ ╚══██╔══╝██╔══██╗██╔════╝██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║
+    ██║   ██████╔╝█████╗  ██║   ██║███████║██████╔╝██║     ███████║
+    ██║   ██╔═══╝ ██╔══╝  ██║   ██║██╔══██║██╔═══╝ ██║     ██╔══██║
+    ██║   ██║     ███████╗╚██████╔╝██║  ██║██║     ╚██████╗██║  ██║
+    ╚═╝   ╚═╝     ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝      ╚═════╝╚═╝  ╚═╝
+    </div>
 
     <script>
         const bootLines = [
-            "[System Booting...]",
-            "Loading Kernel...",
-            "Checking System Integrity...",
-            "Initializing Secure Modules...",
-            "Loading GUI Interface...",
-            "Applying User Configurations...",
-            "Establishing Network Connection...",
-            "Starting System Services...",
-            "Accessing Secure Mode...",
-            "Complete. Press ENTER to continue."
+            "[Treyarch Boot Sequence Initiated...]",
+            "[System Check]: Initializing security protocols...",
+            "[Security]: 256-bit Encryption - OK",
+            "[Security]: Facial Recognition - Enabled",
+            "[Network]: Establishing Secure Connection...",
+            "[Network]: Encrypted Server Handshake - OK",
+            "[Data]: Synchronizing user profiles...",
+            "[Data]: Secure Storage Mounted...",
+            "[Logs]: Checking for unauthorized access...",
+            "[Logs]: No violations detected.",
+            "[Finalizing]: Loading Treyarch Core...",
+            "[Finalizing]: Optimizing UI...",
+            "[Finalizing]: Ready."
         ];
 
         let index = 0;
@@ -41,7 +59,12 @@
             if (index < bootLines.length) {
                 document.getElementById("terminal").innerHTML += bootLines[index] + "\n";
                 index++;
-                setTimeout(typeLine, 500);
+                setTimeout(typeLine, 100);
+            } else {
+                setTimeout(() => {
+                    document.getElementById("ascii-art").style.display = "block";
+                    document.getElementById("terminal").innerHTML += "\nPress ENTER to continue...\n";
+                }, 500);
             }
         }
 
@@ -49,7 +72,7 @@
 
         document.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
-                window.location.href = "https://your-next-page.com"; // Yönlendirme adresi buraya gelsin
+                window.location.href = "https://your-next-page.com"; // Yönlendirme adresi
             }
         });
     </script>
