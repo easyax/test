@@ -14,8 +14,7 @@
       padding: 2px;
       overflow: hidden;
     }
-
-    /* İlk logo */
+    /* İlk logo: Sabit konum, animasyonlu */
     .logo-container {
       position: fixed;
       top: 250px;
@@ -24,28 +23,43 @@
       z-index: 1000;
       animation: electricShock 1s ease-in-out forwards;
     }
-
-    /* İkinci logo (başlangıçta görünmez) */
-    .second-logo-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 350px;
-      opacity: 0;
-      z-index: 1000;
-    }
-
     @keyframes electricShock {
-      0% { opacity: 0; transform: translateY(-20px); filter: brightness(150%) contrast(200%); }
-      10% { opacity: 1; transform: translateY(0); filter: brightness(50%) contrast(300%); }
-      20% { opacity: 0.8; transform: translateY(5px); filter: brightness(200%) contrast(100%); }
-      30% { opacity: 1; transform: translateY(0); filter: brightness(100%) contrast(100%); }
-      40% { opacity: 0.7; transform: translateY(-5px); filter: brightness(150%) contrast(150%); }
-      50% { opacity: 1; transform: translateY(0); filter: brightness(100%) contrast(100%); }
-      100% { opacity: 1; transform: translateY(0); filter: none; }
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+        filter: brightness(150%) contrast(200%);
+      }
+      10% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(50%) contrast(300%);
+      }
+      20% {
+        opacity: 0.8;
+        transform: translateY(5px);
+        filter: brightness(200%) contrast(100%);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(100%) contrast(100%);
+      }
+      40% {
+        opacity: 0.7;
+        transform: translateY(-5px);
+        filter: brightness(150%) contrast(150%);
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: brightness(100%) contrast(100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: none;
+      }
     }
-
     /* Terminal alanı */
     #terminal {
       white-space: pre-wrap;
@@ -56,45 +70,35 @@
       margin-top: 80px;
       padding: 10px;
     }
-
-    /* İlk logo kaybolma efekti */
-    @keyframes logoExit {
-      0% { opacity: 1; transform: translate(0, 0) scale(1); filter: brightness(100%) contrast(100%); }
-      20% { opacity: 0.8; filter: brightness(300%) contrast(50%); }
-      40% { opacity: 0.5; transform: translate(-10px, -10px) scale(1.1); filter: brightness(50%) contrast(300%); }
-      60% { opacity: 0.3; transform: translate(-30px, -30px) scale(1.2); filter: brightness(200%) contrast(100%); }
-      80% { opacity: 0.1; transform: translate(-50px, -50px) scale(1.3); filter: brightness(100%) contrast(150%); }
-      100% { opacity: 0; transform: translate(-100px, -100px) scale(1.5); filter: brightness(0%) contrast(300%); }
+    /* İkinci logo: Başlangıçta gizli, aşağıdan ekrana kayarak girecek */
+    .second-logo-container {
+      position: fixed;
+      bottom: -150px;  /* Başlangıçta ekrandan aşağıda */
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      opacity: 0;
+      transition: bottom 1s ease-out, opacity 1s ease-out;
+      z-index: 1000;
     }
-
-    /* İkinci logo giriş efekti */
-    @keyframes logoEnter {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); filter: brightness(50%) contrast(300%); }
-      20% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); filter: brightness(150%) contrast(100%); }
-      40% { opacity: 0.8; filter: brightness(200%) contrast(50%); }
-      60% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); filter: brightness(100%) contrast(200%); }
-      80% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); filter: brightness(150%) contrast(150%); }
-      100% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: brightness(100%) contrast(100%); }
-    }
-
   </style>
 </head>
 <body>
-  <!-- İlk Logo -->
-  <div class="logo-container" id="firstLogo">
+  <!-- İlk Logo Bölgesi -->
+  <div class="logo-container">
     <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(2).svg" alt="Treyarch Logo">
   </div>
-
-  <!-- Terminal Alanı -->
+  <!-- Terminal Bölgesi -->
   <div id="terminal"></div>
-
-  <!-- İkinci Logo (başlangıçta görünmez) -->
+  <!-- İkinci Logo Bölgesi (başlangıçta gizli) -->
   <div id="secondLogo" class="second-logo-container">
-    <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(3).svg" alt="Secondary Logo">
+    <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(3).svg" alt="Secondary Logo" style="width:100%; display:block;">
   </div>
 
   <script>
     const terminal = document.getElementById("terminal");
+
+    // Temel boot logları
     const bootLines = [
       "[System Boot Initiated...]",
       "[Memory Diagnostic...] PASSED",
@@ -103,10 +107,68 @@
       "[Network Interface Status...] ONLINE",
       "[Validating Cryptographic Modules...] OK",
       "[Activating Treyarch Security System...]",
+      "[Scanning for External Intrusions...] 0 THREATS DETECTED",
       "[Finalizing System Initialization...]",
       "----------------------------------------",
       "SYSTEM LOGS:"
     ];
+
+    // Rastgele sistem logları
+    const randomLogs = [
+      "Task Scheduler: Cycle in 120ms",
+      "Daemon: Refreshing token...",
+      "Kernel: Auto-recovery successful",
+      "Process 7234: CHECKPOINT_REACHED",
+      "Cache: Purging sessions...",
+      "Remote Connection: Tunnel established",
+      "Auth: Biometric scan complete"
+    ];
+
+    // 150 adet rastgele log ekle
+    for (let i = 0; i < 150; i++) {
+      let randomLog = Process ${Math.floor(Math.random() * 9000) + 1000}: ${randomLogs[Math.floor(Math.random() * randomLogs.length)]};
+      bootLines.splice(9, 0, randomLog);
+    }
+
+    // Ek Treyarch güvenlik logları (İngilizce, daha uzun)
+    const treyarchLogs = [
+      "[TREYARCH SECURITY] AI-based intrusion detection activated",
+      "[TREYARCH SECURITY] Real-time threat analytics online",
+      "[TREYARCH SECURITY] End-to-end encryption verified",
+      "[TREYARCH SECURITY] Firewall integrity: Optimal",
+      "[TREYARCH SECURITY] Secure channels established",
+      "[TREYARCH SECURITY] Biometric authentication system initialized",
+      "[TREYARCH SECURITY] Quantum encryption protocols engaged",
+      "[TREYARCH SECURITY] Multi-layer anomaly detection active",
+      "[TREYARCH SECURITY] Zero-trust architecture verification complete",
+      "[TREYARCH SECURITY] Advanced penetration testing successful",
+      "[TREYARCH SECURITY] Cyber threat intelligence system synchronized",
+      "[TREYARCH SECURITY] AI-assisted forensic analysis initiated",
+      "[TREYARCH SECURITY] Secure blockchain ledger integrity verified",
+      "[TREYARCH SECURITY] 256-bit encryption tunnel stabilized",
+      "[TREYARCH SECURITY] Global security node synchronization complete",
+      "[TREYARCH SECURITY] Security audit logs stored in immutable archive",
+      "[TREYARCH SECURITY] Encrypted data vaults secured",
+      "[TREYARCH SECURITY] Security patch level: Up-to-date",
+      "[TREYARCH SECURITY] Secure cloud federation network linked",
+      "[TREYARCH SECURITY] AI-powered risk assessment running in real-time",
+      "[TREYARCH SECURITY] Adaptive firewall response engaged",
+      "[TREYARCH SECURITY] Intrusion Prevention System (IPS) armed",
+      "[TREYARCH SECURITY] Deep learning security model updated",
+      "[TREYARCH SECURITY] Secure boot validation completed",
+      "[TREYARCH SECURITY] Data leakage prevention module active",
+      "[TREYARCH SECURITY] Critical infrastructure protection enabled",
+      "[TREYARCH SECURITY] Decentralized security governance framework applied",
+      "[TREYARCH SECURITY] Anonymized telemetry data processing started",
+      "[TREYARCH SECURITY] Automated cyber response unit deployed",
+      "[TREYARCH SECURITY] Behavioral anomaly detection in operation",
+      "[TREYARCH SECURITY] Enhanced identity verification algorithms running",
+      "[TREYARCH SECURITY] Secure satellite uplink connection verified",
+      "[TREYARCH SECURITY] Post-quantum cryptographic defense enabled",
+      "[TREYARCH SECURITY] System-wide security posture: MAXIMUM DEFENSE"
+    ];
+
+    bootLines.push(...treyarchLogs);
 
     let index = 0;
     function typeLine() {
@@ -115,29 +177,55 @@
         lineElem.textContent = bootLines[index];
         terminal.appendChild(lineElem);
         terminal.scrollTop = terminal.scrollHeight;
+        
+        let delay;
+        if (bootLines[index].startsWith("Process")) {
+          delay = Math.random() * 10 + 5; // 5ms - 15ms
+        } else if (bootLines[index].includes("[")) {
+          delay = Math.random() * 30 + 20; // 20ms - 50ms
+        } else {
+          delay = Math.random() * 20 + 10; // 10ms - 30ms
+        }
+        
         index++;
-        setTimeout(typeLine, Math.random() * 50 + 30);
+        setTimeout(typeLine, delay);
       } else {
         setTimeout(() => {
+          // Terminal bitiş mesajı
           const endLine = document.createElement("div");
           endLine.textContent = "\nPress ENTER to continue...\n";
           terminal.appendChild(endLine);
           terminal.scrollTop = terminal.scrollHeight;
-
-          // İlk logoyu kaybolma efektiyle çıkar
-          const firstLogo = document.getElementById("firstLogo");
-          firstLogo.style.animation = "logoExit 1s ease-in-out forwards";
-
-          // İkinci logoyu giriş efektiyle göster
-          const secondLogo = document.getElementById("secondLogo");
-          secondLogo.style.animation = "logoEnter 1s ease-in-out forwards";
-        }, 500);
+          
+          // Terminal içeriklerini biraz daha yukarı kaydırmak için ekstra boşluk ekleyelim
+          for (let i = 0; i < 5; i++) {
+            const emptyLine = document.createElement("div");
+            emptyLine.innerHTML = "&nbsp;";
+            terminal.appendChild(emptyLine);
+          }
+          terminal.scrollTop = terminal.scrollHeight;
+          
+          // İlk logoyu kaydır (sola doğru kaybolsun)
+          const firstLogo = document.querySelector(".logo-container");
+          firstLogo.style.transition = "all 1s ease-out";
+          firstLogo.style.transform = "translateX(-150%)";
+          firstLogo.style.opacity = "0";
+          
+          // İkinci logoyu, kod akışıyla birlikte yukarı kaydırarak göster\n
+          setTimeout(() => {
+            const secondLogo = document.getElementById("secondLogo");
+            secondLogo.style.transition = "all 1s ease-out";
+            secondLogo.style.bottom = "50px"; // Ekranın içine doğru kaydır\n
+            secondLogo.style.opacity = "1";
+          }, 500);
+        }, 200);
       }
     }
 
+    // Terminal logları, logo animasyonu bittikten sonra 3.5 saniye bekleyip başlasın
     setTimeout(() => {
       typeLine();
-    }, 3000);
+    }, Math.random() * 500 + 3000); // 3000ms - 3500ms bekle
 
     document.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
