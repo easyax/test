@@ -111,7 +111,7 @@
 
     // 150 adet rastgele log ekle
     for (let i = 0; i < 150; i++) {
-      let randomLog = Process ${Math.floor(Math.random() * 9000) + 1000}: ${randomLogs[Math.floor(Math.random() * randomLogs.length)]};
+      let randomLog = `Process ${Math.floor(Math.random() * 9000) + 1000}: ${randomLogs[Math.floor(Math.random() * randomLogs.length)]}`;
       bootLines.splice(9, 0, randomLog);
     }
 
