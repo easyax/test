@@ -14,7 +14,7 @@
       padding: 2px;
       overflow: hidden;
     }
-    /* İlk logo: Sabit konum, animasyonlu */
+    /* Logo animasyonu eklenmiş ve konumlandırılmış */
     .logo-container {
       position: fixed;
       top: 250px;
@@ -60,7 +60,7 @@
         filter: none;
       }
     }
-    /* Terminal alanı */
+    /* Terminal, logo animasyonundan sonra başlayacak */
     #terminal {
       white-space: pre-wrap;
       overflow-y: auto;
@@ -70,30 +70,15 @@
       margin-top: 80px;
       padding: 10px;
     }
-    /* İkinci logo: Başlangıçta gizli, aşağıdan ekrana kayarak girecek */
-    .second-logo-container {
-      position: fixed;
-      bottom: -150px;  /* Başlangıçta ekrandan aşağıda */
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      opacity: 0;
-      transition: bottom 1s ease-out, opacity 1s ease-out;
-      z-index: 1000;
-    }
   </style>
 </head>
 <body>
-  <!-- İlk Logo Bölgesi -->
+  <!-- Logo Bölgesi: GitHub'dan SVG çekiliyor -->
   <div class="logo-container">
     <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(2).svg" alt="Treyarch Logo">
   </div>
   <!-- Terminal Bölgesi -->
   <div id="terminal"></div>
-  <!-- İkinci Logo Bölgesi (başlangıçta gizli) -->
-  <div id="secondLogo" class="second-logo-container">
-    <img src="https://raw.githubusercontent.com/easyax/test/main/Untitled%20(3).svg" alt="Secondary Logo" style="width:100%; display:block;">
-  </div>
 
   <script>
     const terminal = document.getElementById("terminal");
@@ -130,45 +115,47 @@
       bootLines.splice(9, 0, randomLog);
     }
 
-    // Ek Treyarch güvenlik logları (İngilizce, daha uzun)
-    const treyarchLogs = [
-      "[TREYARCH SECURITY] AI-based intrusion detection activated",
-      "[TREYARCH SECURITY] Real-time threat analytics online",
-      "[TREYARCH SECURITY] End-to-end encryption verified",
-      "[TREYARCH SECURITY] Firewall integrity: Optimal",
-      "[TREYARCH SECURITY] Secure channels established",
-      "[TREYARCH SECURITY] Biometric authentication system initialized",
-      "[TREYARCH SECURITY] Quantum encryption protocols engaged",
-      "[TREYARCH SECURITY] Multi-layer anomaly detection active",
-      "[TREYARCH SECURITY] Zero-trust architecture verification complete",
-      "[TREYARCH SECURITY] Advanced penetration testing successful",
-      "[TREYARCH SECURITY] Cyber threat intelligence system synchronized",
-      "[TREYARCH SECURITY] AI-assisted forensic analysis initiated",
-      "[TREYARCH SECURITY] Secure blockchain ledger integrity verified",
-      "[TREYARCH SECURITY] 256-bit encryption tunnel stabilized",
-      "[TREYARCH SECURITY] Global security node synchronization complete",
-      "[TREYARCH SECURITY] Security audit logs stored in immutable archive",
-      "[TREYARCH SECURITY] Encrypted data vaults secured",
-      "[TREYARCH SECURITY] Security patch level: Up-to-date",
-      "[TREYARCH SECURITY] Secure cloud federation network linked",
-      "[TREYARCH SECURITY] AI-powered risk assessment running in real-time",
-      "[TREYARCH SECURITY] Adaptive firewall response engaged",
-      "[TREYARCH SECURITY] Intrusion Prevention System (IPS) armed",
-      "[TREYARCH SECURITY] Deep learning security model updated",
-      "[TREYARCH SECURITY] Secure boot validation completed",
-      "[TREYARCH SECURITY] Data leakage prevention module active",
-      "[TREYARCH SECURITY] Critical infrastructure protection enabled",
-      "[TREYARCH SECURITY] Decentralized security governance framework applied",
-      "[TREYARCH SECURITY] Anonymized telemetry data processing started",
-      "[TREYARCH SECURITY] Automated cyber response unit deployed",
-      "[TREYARCH SECURITY] Behavioral anomaly detection in operation",
-      "[TREYARCH SECURITY] Enhanced identity verification algorithms running",
-      "[TREYARCH SECURITY] Secure satellite uplink connection verified",
-      "[TREYARCH SECURITY] Post-quantum cryptographic defense enabled",
-      "[TREYARCH SECURITY] System-wide security posture: MAXIMUM DEFENSE"
-    ];
+    // Ek Treyarch güvenlik logları (İngilizce)
+   const treyarchLogs = [
+  "[TREYARCH SECURITY] AI-based intrusion detection activated",
+  "[TREYARCH SECURITY] Real-time threat analytics online",
+  "[TREYARCH SECURITY] End-to-end encryption verified",
+  "[TREYARCH SECURITY] Firewall integrity: Optimal",
+  "[TREYARCH SECURITY] Secure channels established",
+  "[TREYARCH SECURITY] Biometric authentication system initialized",
+  "[TREYARCH SECURITY] Quantum encryption protocols engaged",
+  "[TREYARCH SECURITY] Multi-layer anomaly detection active",
+  "[TREYARCH SECURITY] Zero-trust architecture verification complete",
+  "[TREYARCH SECURITY] Advanced penetration testing successful",
+  "[TREYARCH SECURITY] Cyber threat intelligence system synchronized",
+  "[TREYARCH SECURITY] AI-assisted forensic analysis initiated",
+  "[TREYARCH SECURITY] Secure blockchain ledger integrity verified",
+  "[TREYARCH SECURITY] 256-bit encryption tunnel stabilized",
+  "[TREYARCH SECURITY] Global security node synchronization complete",
+  "[TREYARCH SECURITY] Security audit logs stored in immutable archive",
+  "[TREYARCH SECURITY] Encrypted data vaults secured",
+  "[TREYARCH SECURITY] Security patch level: Up-to-date",
+  "[TREYARCH SECURITY] Secure cloud federation network linked",
+  "[TREYARCH SECURITY] AI-powered risk assessment running in real-time",
+  "[TREYARCH SECURITY] Adaptive firewall response engaged",
+  "[TREYARCH SECURITY] Intrusion Prevention System (IPS) armed",
+  "[TREYARCH SECURITY] Deep learning security model updated",
+  "[TREYARCH SECURITY] Secure boot validation completed",
+  "[TREYARCH SECURITY] Data leakage prevention module active",
+  "[TREYARCH SECURITY] Critical infrastructure protection enabled",
+  "[TREYARCH SECURITY] Decentralized security governance framework applied",
+  "[TREYARCH SECURITY] Anonymized telemetry data processing started",
+  "[TREYARCH SECURITY] Automated cyber response unit deployed",
+  "[TREYARCH SECURITY] Behavioral anomaly detection in operation",
+  "[TREYARCH SECURITY] Enhanced identity verification algorithms running",
+  "[TREYARCH SECURITY] Secure satellite uplink connection verified",
+  "[TREYARCH SECURITY] Post-quantum cryptographic defense enabled",
+  "[TREYARCH SECURITY] System-wide security posture: MAXIMUM DEFENSE"
+];
 
-    bootLines.push(...treyarchLogs);
+bootLines.push(...treyarchLogs);
+
+
 
     let index = 0;
     function typeLine() {
@@ -180,49 +167,26 @@
         
         let delay;
         if (bootLines[index].startsWith("Process")) {
-          delay = Math.random() * 10 + 5; // 5ms - 15ms
+          delay = Math.random() * 10 + 5; // 5ms - 15ms arası
         } else if (bootLines[index].includes("[")) {
-          delay = Math.random() * 30 + 20; // 20ms - 50ms
+          delay = Math.random() * 30 + 20; // 20ms - 50ms arası
         } else {
-          delay = Math.random() * 20 + 10; // 10ms - 30ms
+          delay = Math.random() * 20 + 10; // 10ms - 30ms arası
         }
         
         index++;
         setTimeout(typeLine, delay);
       } else {
         setTimeout(() => {
-          // Terminal bitiş mesajı
           const endLine = document.createElement("div");
           endLine.textContent = "\nPress ENTER to continue...\n";
           terminal.appendChild(endLine);
           terminal.scrollTop = terminal.scrollHeight;
-          
-          // Terminal içeriklerini biraz daha yukarı kaydırmak için ekstra boşluk ekleyelim
-          for (let i = 0; i < 5; i++) {
-            const emptyLine = document.createElement("div");
-            emptyLine.innerHTML = "&nbsp;";
-            terminal.appendChild(emptyLine);
-          }
-          terminal.scrollTop = terminal.scrollHeight;
-          
-          // İlk logoyu kaydır (sola doğru kaybolsun)
-          const firstLogo = document.querySelector(".logo-container");
-          firstLogo.style.transition = "all 1s ease-out";
-          firstLogo.style.transform = "translateX(-150%)";
-          firstLogo.style.opacity = "0";
-          
-          // İkinci logoyu, kod akışıyla birlikte yukarı kaydırarak göster\n
-          setTimeout(() => {
-            const secondLogo = document.getElementById("secondLogo");
-            secondLogo.style.transition = "all 1s ease-out";
-            secondLogo.style.bottom = "50px"; // Ekranın içine doğru kaydır\n
-            secondLogo.style.opacity = "1";
-          }, 500);
         }, 200);
       }
     }
 
-    // Terminal logları, logo animasyonu bittikten sonra 3.5 saniye bekleyip başlasın
+    // Terminal logları başlamadan önce logo animasyonunun bitip ekstra 1.5 saniye beklemesi
     setTimeout(() => {
       typeLine();
     }, Math.random() * 500 + 3000); // 3000ms - 3500ms bekle
