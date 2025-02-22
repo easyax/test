@@ -22,51 +22,74 @@
       flex-direction: column;
     }
     .logo-container {
-      display: none;
       text-align: center;
-      margin-top: 20px;
+      margin-bottom: 20px;
     }
     .logo-container img {
-      max-width: 80%;
+      width: 200px;
+      display: block;
+      margin: auto;
     }
   </style>
 </head>
 <body>
-  <div id="terminal"></div>
-  <div id="logo" class="logo-container">
-    <!-- Treyarch Logo Image - Lütfen 'treyarch_logo.png' dosyasını GitHub Pages projenize ekleyin veya buradaki src'yi kendi logo linkinizle değiştirin -->
-    <img src="<img src="https://raw.githubusercontent.com/kullanici_adin/repository/main/treyarch-logo.svg" alt="Treyarch Logo" style="display: block; margin: auto; width: 200px;">
-" alt="Treyarch Logo">
+  <div class="logo-container">
+    <img src="https://raw.githubusercontent.com/kullanici_adin/repository/main/treyarch-logo.svg" alt="Treyarch Logo">
   </div>
+  <div id="terminal"></div>
 
   <script>
     const terminal = document.getElementById("terminal");
 
-    // Temel boot logları
+    // Boot logları
     const bootLines = [
-      "[Initializing Treyarch Secure System...]",
-      "[Checking Memory...] OK",
-      "[Loading Kernel Modules...]",
-      "[Connecting to Secure Network...]",
-      "[Validating Encryption Keys...]",
-      "[System Security Scan...] No Threats Detected",
-      "[Loading Custom AI Protocols...]",
-      "[Authenticating Users...]",
-      "[Booting Advanced Firewall...]",
-      "[Checking RAID Configuration...]",
-      "[Loading Secure Storage Modules...]",
-      "[Scanning External Connections...]",
-      "[Loading UI Components...]",
+      "[System Boot Initiated...]",
+      "[Memory Diagnostic...] PASSED",
+      "[Loading Secure Kernel...]",
+      "[Checking System Integrity...] SUCCESS",
+      "[Network Interface Status...] ONLINE",
+      "[Validating Cryptographic Modules...] OK",
+      "[Loading Advanced AI Modules...]",
+      "[Initializing Firewall v5.2...]",
+      "[Checking Disk Array Health...] ALL SECTORS OK",
+      "[Activating Quantum Encryption Layer...] ACTIVE",
+      "[Establishing Secure Communication Channels...]",
+      "[Scanning for External Intrusions...] 0 THREATS DETECTED",
       "[Finalizing System Initialization...]",
       "----------------------------------------",
-      "RANDOM SYSTEM LOGS:",
+      "SYSTEM LOGS:"
     ];
 
-    // 300+ rastgele satır oluştur (mantıklı olanların arasına yerleştiriliyor)
+    // 300+ rastgele sistem logu ekleyelim
+    const randomLogs = [
+      "Task Scheduler: Next execution cycle in 120ms",
+      "Daemon Service: Refreshing security token...",
+      "Kernel Panic: FALSE ALARM, Auto-recovery successful",
+      "Packet Analyzer: Unusual traffic detected from 192.168.1.254",
+      "Process 7234: SYSTEM_CHECKPOINT_REACHED",
+      "Cache Manager: Purging outdated sessions...",
+      "Firewall Alert: Unauthorized access attempt blocked",
+      "Security Daemon: New fingerprint profile registered",
+      "AI Monitor: Predictive analytics module recalibrated",
+      "Database Sync: Cluster nodes synchronized (latency: 3ms)",
+      "Power Management: Switching to high-efficiency mode",
+      "Quantum Processing Unit: Cycle refresh completed",
+      "Root Access Attempt: DENIED (3 failed attempts)",
+      "System Task: Executing scheduled maintenance",
+      "Encrypted Channel: Handshake verified",
+      "Neural Network: Optimizing response time...",
+      "Auth System: Biometric scan complete",
+      "I/O Manager: Disk read/write speeds optimized",
+      "Remote Connection: Secure tunnel established",
+      "Threat Detection: Running deep scan...",
+      "Core Services: Restart required in 48 hours",
+      "Error Handler: Non-critical exception logged"
+    ];
+
+    // Rastgele 300 log ekle
     for (let i = 0; i < 300; i++) {
-      let randomHex = Math.floor(Math.random() * 0xFFFFFF).toString(16).toUpperCase();
-      let randomCode = `Process ${Math.floor(Math.random() * 9000) + 1000}: SYS_EVENT_${randomHex}`;
-      bootLines.splice(15, 0, randomCode);
+      let randomLog = `Process ${Math.floor(Math.random() * 9000) + 1000}: ${randomLogs[Math.floor(Math.random() * randomLogs.length)]}`;
+      bootLines.splice(15, 0, randomLog);
     }
 
     let index = 0;
@@ -75,38 +98,36 @@
         const lineElem = document.createElement("div");
         lineElem.textContent = bootLines[index];
         terminal.appendChild(lineElem);
-        // Otomatik kaydırma
         terminal.scrollTop = terminal.scrollHeight;
 
-        // Gecikme ayarı:
-        // "Process ...: SYS_EVENT_..." gibi anlamsız loglar çok hızlı geçsin.
+        // Log geçiş hızını belirleme (hızlandırıldı)
         let delay;
-        if (bootLines[index].startsWith("Process") && bootLines[index].includes("SYS_EVENT")) {
-          delay = Math.random() * 30 + 20; // 20ms-50ms arası
+        if (bootLines[index].startsWith("Process")) {
+          delay = Math.random() * 50 + 10; // 10ms-60ms
         } else if (bootLines[index].includes("[")) {
-          delay = Math.random() * 500 + 300; // Mantıklı loglar 300ms-800ms
+          delay = Math.random() * 200 + 100; // 100ms-300ms
         } else {
-          delay = Math.random() * 150 + 50; // Diğerleri 50ms-200ms
+          delay = Math.random() * 100 + 30; // 30ms-130ms
         }
 
         index++;
         setTimeout(typeLine, delay);
       } else {
-        // Tüm satırlar yazıldığında logo görüntüsünü göster
+        // Tüm loglar bittiğinde mesaj ekle
         setTimeout(() => {
-          document.getElementById("logo").style.display = "block";
           const endLine = document.createElement("div");
           endLine.textContent = "\nPress ENTER to continue...\n";
           terminal.appendChild(endLine);
           terminal.scrollTop = terminal.scrollHeight;
-        }, 500);
+        }, 300);
       }
     }
+
     typeLine();
 
     document.addEventListener("keypress", (event) => {
       if (event.key === "Enter") {
-        window.location.href = "https://your-next-page.com"; // Yönlendirme adresini buraya girin
+        window.location.href = "https://your-next-page.com"; // Yönlendirme adresi
       }
     });
   </script>
