@@ -35,7 +35,8 @@
   <div id="terminal"></div>
   <div id="logo" class="logo-container">
     <!-- Treyarch Logo Image - Lütfen 'treyarch_logo.png' dosyasını GitHub Pages projenize ekleyin veya buradaki src'yi kendi logo linkinizle değiştirin -->
-    <img src="treyarch_logo.png" alt="Treyarch Logo">
+    <img src="<img src="https://raw.githubusercontent.com/kullanici_adin/repository/main/treyarch-logo.svg" alt="Treyarch Logo" style="display: block; margin: auto; width: 200px;">
+" alt="Treyarch Logo">
   </div>
 
   <script>
@@ -77,10 +78,16 @@
         // Otomatik kaydırma
         terminal.scrollTop = terminal.scrollHeight;
 
-        // Mantıklı satırlarda yavaş, rastgele satırlarda hızlı yazdırma
-        let delay = (bootLines[index].includes("[") || bootLines[index].includes(":")) 
-            ? Math.random() * 500 + 300   // 300ms-800ms arası
-            : Math.random() * 150 + 50;   // 50ms-200ms arası
+        // Gecikme ayarı:
+        // "Process ...: SYS_EVENT_..." gibi anlamsız loglar çok hızlı geçsin.
+        let delay;
+        if (bootLines[index].startsWith("Process") && bootLines[index].includes("SYS_EVENT")) {
+          delay = Math.random() * 30 + 20; // 20ms-50ms arası
+        } else if (bootLines[index].includes("[")) {
+          delay = Math.random() * 500 + 300; // Mantıklı loglar 300ms-800ms
+        } else {
+          delay = Math.random() * 150 + 50; // Diğerleri 50ms-200ms
+        }
 
         index++;
         setTimeout(typeLine, delay);
